@@ -63,6 +63,8 @@ def urllib3_download(media_url, size, outdir):
     r = pool_manager.request('GET', media_url + ':' + size)
     bs = os.path.basename(media_url)
     filename = os.path.join(outdir or '', bs)
-    with open(filename, 'wb') as fd:
-        fd.write(r.data)
+    if not os.path.exists(filename):
+        with open(filename, 'wb') as fd:
+            fd.write(r.data)
     return filename
+
